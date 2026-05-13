@@ -1,7 +1,60 @@
 ﻿@page "/"
+@using Markdig
+@using YnYMono.Services
+@inject ErpAiService AiService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Y&Y AI ERP Dashboard</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container mt-4">
+    <h2 class="text-primary fw-bold">Y&Y AI Troubleshooting</h2>
+    <p>Enter an issue below, and the AI will scan our vector database manuals to help you.</p>
 
-Welcome to your new app.
+    <div class="card shadow-sm p-4 mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label>Product Code</label>
+                <input class="form-control" @bind="ProductCode" placeholder="e.g., MACHINE-001" />
+            </div>
+            <div class="col-md-8">
+                <label>Describe the Issue</label>
+                <input class="form-control" @bind="Issue" placeholder="e.g., Red light flashing on panel..." />
+            </div>
+        </div>
+        <button class="btn btn-dark mt-3" @onclick="AskAi" disabled="@IsLoading">
+            @(IsLoading ? "AI is thinking..." : "Ask AI")
+        </button>
+    </div>
+
+    @if (!string.IsNullOrEmpty(AiResponseHtml))
+    {
+        <div class="alert alert-success shadow-sm">
+            <h4>AI Diagnostics:</h4>
+            <hr />
+            <!-- MarkupString allows Blazor to render the HTML safely -->
+            <div>@((MarkupString)AiResponseHtml)</div>
+        </div>
+    }
+</div>
+
+@code {
+    private string ProductCode = "";
+    private string Issue = "";
+    private string AiResponseHtml = "";
+    private bool IsLoading = false;
+
+    private async Task AskAi()
+    {
+        if (string.IsNullOrWhiteSpace(ProductCode) || string.IsNullOrWhiteSpace(Issue)) return;
+
+        IsLoading = true;
+        
+        // Directly call the C# backend service (No HTTP Axios calls needed!)
+        var rawMarkdown = await AiService.TroubleshootMachineAsync(ProductCode, Issue);
+        
+        // Convert Markdown to HTML using Markdig
+        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        AiResponseHtml = Markdown.ToHtml(rawMarkdown, pipeline);
+        
+        IsLoading = false;
+    }
+}
