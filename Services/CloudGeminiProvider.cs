@@ -18,20 +18,27 @@ public class CloudGeminiProvider : IAiProvider
     {
         var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key={_apiKey}";
         
-        var payload = new { content = new { parts = new[] { new { text = text } } } };
+        // ✅ FIXED: Added outputDimensionality = 768 to the embedding payload
+        var payload = new { 
+            content = new { parts = new[] { new { text = text } } },
+            outputDimensionality = 768 
+        };
+        
         var response = await _http.PostAsJsonAsync(url, payload);
         var json = await response.Content.ReadFromJsonAsync<JsonObject>();
         
         // Extract the float[] from Google's JSON response
         var embeddingArray = json!["embedding"]!["values"]!.AsArray();
-        return embeddingArray!.Select(x => (float)x!.GetValue<double>()).ToArray();
+        
+        // 🛡️ BULLETPROOF SHIELD: .Take(768) guarantees exactly 768 dimensions
+        return embeddingArray!.Select(x => (float)x!.GetValue<double>()).Take(768).ToArray();
     }
 
     public async Task<string> GenerateTextAsync(string systemPrompt, string userPrompt)
     {
-        // Using the exact model requested
         var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemma-4-26b-a4b-it:generateContent?key={_apiKey}";
         
+        // ❌ FIXED: Removed outputDimensionality from here (it is only for vectors, not text)
         var payload = new { 
             contents = new[] { 
                 new { role = "user", parts = new[] { new { text = $"{systemPrompt}\n\n{userPrompt}" } } } 

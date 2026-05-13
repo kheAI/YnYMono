@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/0huF6oiPr0=",
+  "dgSpecHash": "H+9w97wY4hg=",
   "success": true,
   "projectFilePath": "/Users/kafechew/dev/YnYMono/YnYMono.csproj",
   "expectedPackageFiles": [
+    "/Users/kafechew/.nuget/packages/efcore.namingconventions/8.0.3/efcore.namingconventions.8.0.3.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/markdig/1.2.0/markdig.1.2.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

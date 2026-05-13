@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         o => o.UseVector() // Enable Vector operations
-    ));
+    ).UseSnakeCaseNamingConvention());
 
 // Dynamic AI Injection (Toggle based on appsettings)
 bool useLocalModel = builder.Configuration.GetValue<bool>("AiSettings:UseLocalModel");
