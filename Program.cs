@@ -1,27 +1,40 @@
-using YnYMono.Components;
+using Microsoft.EntityFrameworkCore;
+using YnYMono.Data;
+using YnYMono.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+// Add Blazor services
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddHttpClient(); // For Cloud Gemini
 
-var app = builder.Build();
+// Configure Cloud SQL Database with pgvector
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        o => o.UseVector() // Enable Vector operations
+    ));
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+// Dynamic AI Injection (Toggle based on appsettings)
+bool useLocalModel = builder.Configuration.GetValue<bool>("AiSettings:UseLocalModel");
+if (useLocalModel)
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    builder.Services.AddScoped<IAiProvider, LocalGemmaProvider>();
+}
+else
+{
+    builder.Services.AddScoped<IAiProvider, CloudGeminiProvider>();
 }
 
-app.UseHttpsRedirection();
+// Register our RAG Service
+builder.Services.AddScoped<ErpAiService>();
+
+var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<YnYMono.Components.App>()
+   .AddInteractiveServerRenderMode();
 
 app.Run();
