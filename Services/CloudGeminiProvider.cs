@@ -23,7 +23,7 @@ public class CloudGeminiProvider : IAiProvider
         var json = await response.Content.ReadFromJsonAsync<JsonObject>();
         
         // Extract the float[] from Google's JSON response
-        var embeddingArray = json["embedding"]?["values"]?.AsArray();
+        var embeddingArray = json!["embedding"]!["values"]!.AsArray();
         return embeddingArray!.Select(x => (float)x!.GetValue<double>()).ToArray();
     }
 
@@ -41,6 +41,6 @@ public class CloudGeminiProvider : IAiProvider
         var response = await _http.PostAsJsonAsync(url, payload);
         var json = await response.Content.ReadFromJsonAsync<JsonObject>();
         
-        return json["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.ToString() ?? "AI Error";
+        return json!["candidates"]![0]!["content"]!["parts"]![0]!["text"]!.ToString() ?? "AI Error";
     }
 }

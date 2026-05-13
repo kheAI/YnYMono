@@ -57,10 +57,6 @@
               "target": "Package",
               "version": "[8.0.8, )"
             },
-            "OllamaSharp": {
-              "target": "Package",
-              "version": "[5.4.25, )"
-            },
             "Pgvector.EntityFrameworkCore": {
               "target": "Package",
               "version": "[0.2.1, )"

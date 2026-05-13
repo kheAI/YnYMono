@@ -1,32 +1,55 @@
-using OllamaSharp;
+using System.Net.Http.Json;
+using System.Text.Json.Nodes;
 
 namespace YnYMono.Services;
 
 public class LocalGemmaProvider : IAiProvider
 {
-    private readonly OllamaApiClient _ollama;
+    private readonly HttpClient _http;
+    
+    // The default Ollama port on your Mac/PC
+    private readonly string _ollamaUrl = "http://localhost:11434"; 
+    private readonly string _textModel = "gemma"; // Update if your local model is named differently
+    private readonly string _embedModel = "nomic-embed-text";
 
-    public LocalGemmaProvider()
+    // We inject HttpClient just like we did in CloudGeminiProvider!
+    public LocalGemmaProvider(HttpClient http)
     {
-        // Connect to local Ollama instance
-        _ollama = new OllamaApiClient(new Uri("http://localhost:11434"));
-        _ollama.SelectedModel = "gemma"; // Or whatever you named your gemma-4-26b-a4b-it equivalent locally
+        _http = http;
     }
 
     public async Task<float[]> GetEmbeddingAsync(string text)
     {
-        var response = await _ollama.EmbeddingsAsync(new OllamaSharp.Models.EmbeddingsRequest {
-            Model = "nomic-embed-text", // Standard fast local embedding model
-            Prompt = text
-        });
-        return response.Embedding;
+        var url = $"{_ollamaUrl}/api/embeddings";
+        var payload = new { model = _embedModel, prompt = text };
+        
+        // Make the HTTP request to local Ollama
+        var response = await _http.PostAsJsonAsync(url, payload);
+        response.EnsureSuccessStatusCode();
+        
+        // Parse the JSON array
+        var json = await response.Content.ReadFromJsonAsync<JsonObject>();
+        var embeddingArray = json!["embedding"]!.AsArray();
+        
+        return embeddingArray.Select(x => (float)x!.GetValue<double>()).ToArray();
     }
 
     public async Task<string> GenerateTextAsync(string systemPrompt, string userPrompt)
     {
-        var response = await _ollama.GenerateAsync(new OllamaSharp.Models.GenerateRequest {
-            Prompt = $"{systemPrompt}\n\n{userPrompt}"
-        });
-        return response.Response;
+        var url = $"{_ollamaUrl}/api/generate";
+        
+        // We set stream = false so Ollama gives us the full answer at once
+        var payload = new 
+        { 
+            model = _textModel, 
+            prompt = $"{systemPrompt}\n\n{userPrompt}",
+            stream = false 
+        };
+        
+        var response = await _http.PostAsJsonAsync(url, payload);
+        response.EnsureSuccessStatusCode();
+        
+        var json = await response.Content.ReadFromJsonAsync<JsonObject>();
+        return json!["response"]!.ToString();
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "jPastfKjoBw=",
+  "dgSpecHash": "/0huF6oiPr0=",
   "success": true,
   "projectFilePath": "/Users/kafechew/dev/YnYMono/YnYMono.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,6 @@
     "/Users/kafechew/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.8/microsoft.entityframeworkcore.analyzers.8.0.8.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.entityframeworkcore.design/8.0.8/microsoft.entityframeworkcore.design.8.0.8.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.8/microsoft.entityframeworkcore.relational.8.0.8.nupkg.sha512",
-    "/Users/kafechew/.nuget/packages/microsoft.extensions.ai.abstractions/10.4.1/microsoft.extensions.ai.abstractions.10.4.1.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
@@ -31,7 +30,6 @@
     "/Users/kafechew/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/npgsql/8.0.4/npgsql.8.0.4.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.8/npgsql.entityframeworkcore.postgresql.8.0.8.nupkg.sha512",
-    "/Users/kafechew/.nuget/packages/ollamasharp/5.4.25/ollamasharp.5.4.25.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/pgvector/0.3.0/pgvector.0.3.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/pgvector.entityframeworkcore/0.2.1/pgvector.entityframeworkcore.0.2.1.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.codedom/4.4.0/system.codedom.4.4.0.nupkg.sha512",
@@ -42,12 +40,12 @@
     "/Users/kafechew/.nuget/packages/system.composition.hosting/6.0.0/system.composition.hosting.6.0.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.composition.runtime/6.0.0/system.composition.runtime.6.0.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.composition.typedparts/6.0.0/system.composition.typedparts.6.0.0.nupkg.sha512",
-    "/Users/kafechew/.nuget/packages/system.io.pipelines/10.0.4/system.io.pipelines.10.0.4.nupkg.sha512",
+    "/Users/kafechew/.nuget/packages/system.io.pipelines/6.0.3/system.io.pipelines.6.0.3.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.reflection.metadata/6.0.1/system.reflection.metadata.6.0.1.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
-    "/Users/kafechew/.nuget/packages/system.text.encodings.web/10.0.4/system.text.encodings.web.10.0.4.nupkg.sha512",
-    "/Users/kafechew/.nuget/packages/system.text.json/10.0.4/system.text.json.10.0.4.nupkg.sha512",
+    "/Users/kafechew/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/kafechew/.nuget/packages/system.text.json/8.0.4/system.text.json.8.0.4.nupkg.sha512",
     "/Users/kafechew/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512"
   ],
   "logs": []
